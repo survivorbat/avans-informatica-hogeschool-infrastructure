@@ -1,0 +1,16 @@
+---
+  - name: "Ensure {{ nginx_config_directory }} exists"
+    file:
+      state: directory
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+      mode: "{{ nginx_config_mode }}"
+
+  - name: "Ensure nginx files are present in {{ nginx_config_directory }}"
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+      mode: "{{ nginx_config_mode }}"
+    with_items: "{{ nginx_config_requirements }}"

@@ -1,0 +1,20 @@
+
+language: python
+
+python:
+  - "2.7"
+
+install:
+  - pip install ansible docker
+  - ansible-galaxy install -r requirements.yml
+
+before_script:
+  - echo -e $pkey > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e $vaultpassword > ../.vault-password
+
+script:
+  - if [ $TRAVIS_BRANCH == "master" ]; then ansible-playbook -e docker_password=$docker_password -u root -i inventories/production site.yml --vault-password-file=../.vault-password; fi
+
+services:
+  - docker

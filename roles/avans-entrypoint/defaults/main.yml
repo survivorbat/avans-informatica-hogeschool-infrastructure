@@ -1,0 +1,9 @@
+---
+nginx_config_directory: /etc/nginx
+nginx_config_requirements:
+  - { src: nginx.conf, dest: {{ nginx_config_directory }}/nginx.conf }
+  - { src: conf.d, dest: {{ nginx_config_directory }}/conf.d }
+
+nginx_config_owner: nobody
+nginx_config_group: nobody
+nginx_config_mode: 0755

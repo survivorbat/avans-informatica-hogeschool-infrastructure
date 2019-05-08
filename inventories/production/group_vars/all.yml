@@ -1,0 +1,15 @@
+---
+common_groups:
+  - name: admin
+
+common_users:
+  - username: "mvanderheijden"
+    groups: ["sudo"]
+    ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRXbY+wcMq0zSE6lF8xiL83cQk/7/Y4uV1AQ+9LlyV4F2hCUKXzXFXhNzpWFP0xWd4rtwgQ6zK188fOwl+YZHnfE/LswbSeNsjjbYm+z2ijMbrMMCcooY+hoVJI3tAx+7EUc8RKRs07hSGmmP8NhfuRghZw04nzui+fJkAE/Wd09Y1a+s5GucLbjJJEDJzuuvy/12Vow2QrGLNtbcr3N5SquZmp5nhHfua6NFQgVZ6jO17+2MqqcXObxFQzmWte7QKa1g6UoE/v1/WcOxmYkrYyMVtts7TKMXVWF/Kj+qOLnj9VIgWNHZ38hztb2nOiIQVrwz9bLx0UDZ29dm0zS5b maarten@MaartenPC"
+    password: ""
+  - username: "pvangastel"
+    groups: ["sudo"]
+    ssh_public_key: ""
+  - username: "rschellius"
+    groups: ["sudo"]
+    ssh_public_key: ""

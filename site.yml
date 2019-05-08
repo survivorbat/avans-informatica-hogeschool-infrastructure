@@ -1,0 +1,12 @@
+---
+- hosts: "all"
+  become: "yes"
+  roles:
+    - { role: "common", tags: "common" }
+
+- hosts: "Entrypoint"
+  become: "yes"
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.pip
+    - { role: "avans-entrypoint", tags: "entrypoint" }
