@@ -1,15 +1,30 @@
 ---
 common_groups:
   - name: admin
+    uid: 5000
 
 common_users:
-  - username: "mvanderheijden"
-    groups: ["sudo"]
-    ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRXbY+wcMq0zSE6lF8xiL83cQk/7/Y4uV1AQ+9LlyV4F2hCUKXzXFXhNzpWFP0xWd4rtwgQ6zK188fOwl+YZHnfE/LswbSeNsjjbYm+z2ijMbrMMCcooY+hoVJI3tAx+7EUc8RKRs07hSGmmP8NhfuRghZw04nzui+fJkAE/Wd09Y1a+s5GucLbjJJEDJzuuvy/12Vow2QrGLNtbcr3N5SquZmp5nhHfua6NFQgVZ6jO17+2MqqcXObxFQzmWte7QKa1g6UoE/v1/WcOxmYkrYyMVtts7TKMXVWF/Kj+qOLnj9VIgWNHZ38hztb2nOiIQVrwz9bLx0UDZ29dm0zS5b maarten@MaartenPC"
+  - name: "mvanderheijden"
+    groups: ["sudo", "admin"]
+    ssh_public_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRXbY+wcMq0zSE6lF8xiL83cQk/7/Y4uV1AQ+9LlyV4F2hCUKXzXFXhNzpWFP0xWd4rtwgQ6zK188fOwl+YZHnfE/LswbSeNsjjbYm+z2ijMbrMMCcooY+hoVJI3tAx+7EUc8RKRs07hSGmmP8NhfuRghZw04nzui+fJkAE/Wd09Y1a+s5GucLbjJJEDJzuuvy/12Vow2QrGLNtbcr3N5SquZmp5nhHfua6NFQgVZ6jO17+2MqqcXObxFQzmWte7QKa1g6UoE/v1/WcOxmYkrYyMVtts7TKMXVWF/Kj+qOLnj9VIgWNHZ38hztb2nOiIQVrwz9bLx0UDZ29dm0zS5b maarten@MaartenPC
+    password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      66623265313736313065303733653231376332626236396635393939663063666539353736356636
+      6230383233613063313565663336663135643061326430340a333461623730353064633963343135
+      65663938306363376634383664333961303638626438313737333363633266396538346263356139
+      3230313535393536610a313633373438653963333031646665333435383430383231343833623539
+      39316337636630343030323833643264633863313961666162653839303739316437306366316339
+      3262393334313861323635616330643661346266653937663462
+  - name: "pvangastel"
+    groups: ["sudo", "admin"]
+    ssh_public_key: ""
     password: ""
-  - username: "pvangastel"
-    groups: ["sudo"]
+  - name: "rschellius"
+    groups: ["sudo", "admin"]
     ssh_public_key: ""
-  - username: "rschellius"
-    groups: ["sudo"]
+    password: ""
+  - name: "eargante"
+    groups: ["sudo", "admin"]
     ssh_public_key: ""
+    password: ""

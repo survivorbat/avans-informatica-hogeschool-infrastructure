@@ -4,7 +4,14 @@
       state: directory
       owner: "{{ nginx_config_owner }}"
       group: "{{ nginx_config_group }}"
-      mode: "{{ nginx_config_mode }}"
+      mode: 0755
+
+  - name: "Ensure {{ nginx_webroot_directory }} exists"
+    file:
+      state: directory
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+      mode: 0755
 
   - name: "Ensure nginx files are present in {{ nginx_config_directory }}"
     copy:
@@ -12,5 +19,5 @@
       dest: "{{ item.dest }}"
       owner: "{{ nginx_config_owner }}"
       group: "{{ nginx_config_group }}"
-      mode: "{{ nginx_config_mode }}"
+      mode: 0755
     with_items: "{{ nginx_config_requirements }}"

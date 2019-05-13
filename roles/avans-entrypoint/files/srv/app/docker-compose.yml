@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  nginx:
+    image: nginx:1.16.0-alpine
+    ports:
+      - 80:8080
+      - 443:8443
+    volumes:
+      - /var/www/letsencrypt:/var/www/letsencrypt
+      - /etc/letsencrypt:/etc/letencrypt
+      - /srv/app/www:/srv/app/www
+      - /etc/nginx_config_directory/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/nginx_config_directory/conf.d:/etc/nginx/conf.d

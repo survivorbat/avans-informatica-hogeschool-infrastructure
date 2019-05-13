@@ -1,16 +1,16 @@
 ---
 - name: "Ensure users exist"
   user:
-    name: "{{ item.username }}"
+    name: "{{ item.name }}"
     state: "present"
     password: "{{ item.password|default(omit) }}"
     groups: "{{ item.groups|default(omit) }}"
     shell: "/bin/bash"
-  loop: "{{ common_users }}"
+  with_items: "{{ common_users }}"
 
 - name: "Ensure users are able login with their public key"
   authorized_key:
-    user: "{{ item.username }}"
+    user: "{{ item.name }}"
     state: "present"
     key: "{{ item.ssh_public_key }}"
-  loop: "{{ common_users }}"
+  with_items: "{{ common_users }}"

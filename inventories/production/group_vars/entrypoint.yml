@@ -1,5 +1,4 @@
 ---
-nginx_config_directory: /etc/avans-hogeschool-breda/nginx
-nginx_config_owner: appuser
-nginx_config_group: appgroup
-nginx_config_mode: 0755
+nginx_host_domain_names:
+  - avans-informatica-breda.nl
+  - sonarqube.avans-informatica-breda.nl

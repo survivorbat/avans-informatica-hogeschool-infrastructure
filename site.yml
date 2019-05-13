@@ -7,6 +7,9 @@
 - hosts: "Entrypoint"
   become: "yes"
   roles:
-    - geerlingguy.docker
-    - geerlingguy.pip
-    - { role: "avans-entrypoint", tags: "entrypoint" }
+    - role: geerlingguy.docker
+      tags: server_install
+    - role: geerlingguy.pip
+      tags: server_install
+    - role: avans-entrypoint
+      tags: server_deploy

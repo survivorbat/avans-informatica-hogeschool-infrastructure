@@ -1,0 +1,46 @@
+---
+- name: "Register whether {{ nginx_host_letsencrypt_live_folder }} certificates exist"
+  stat:
+    path: "{{ nginx_host_letsencrypt_live_folder }}"
+  register: stat_fullchain
+
+- name: "Run certbot challenge if letsencrypt has not been installed"
+  command: "certbot certonly
+      --agree-tos
+      -m {{ nginx_host_letsencrypt_email }}
+      -d {{ nginx_host_domain_names.join('') }}
+      --standalone
+      -n"
+  when: stat_fullchain.stat.exists == False
+
+- name: "Run certbot challenges if letsencrypt has already been installed"
+  command: "certbot certonly
+    --agree-tos
+    -m {{ nginx_host_letsencrypt_email }}
+    -w {{ nginx_webroot_directory }}
+    -d {{ nginx_host_domain_names.join('') }}
+    --webroot
+    -n"
+
+- name: "Copy service and timer templates for service {{ nginx_host_letsencrypt_service_name }} to {{ nginx_host_letsencrypt_system_folder }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "644"
+    owner: root
+    group: root
+  with_items: "{{ nginx_host_letsencrypt_system_files }}"
+
+- name: "Start and enable service {{ nginx_host_letsencrypt_service_name }}"
+  service:
+    name: "{{ nginx_host_letsencrypt_service_name }}"
+    state: started
+    enabled: yes
+
+- name: "Ensure dhparam.pem exists for domains at {{ nginx_host_letsencrypt_live_folder }} with size {{ nginx_host_letsencrypt_dhparam_size }}"
+  openssl_dhparam:
+    path: "{{ nginx_host_letsencrypt_live_folder }}/{{ item }}/dhparam.pem"
+    owner: "{{ default_user }}"
+    group: "{{ default_group }}"
+    size: "{{ nginx_host_letsencrypt_dhparam_size }}"
+  with_items: "{{ nginx_host_domain_names }}"
