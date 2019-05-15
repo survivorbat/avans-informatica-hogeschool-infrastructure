@@ -1,10 +1,12 @@
 ---
 common_groups:
   - name: admin
-    uid: 5000
+    gid: 5000
 
+# TODO: Add passwords for all users
 common_users:
   - name: "mvanderheijden"
+    uid: 2000
     groups: ["sudo", "admin"]
     ssh_public_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRXbY+wcMq0zSE6lF8xiL83cQk/7/Y4uV1AQ+9LlyV4F2hCUKXzXFXhNzpWFP0xWd4rtwgQ6zK188fOwl+YZHnfE/LswbSeNsjjbYm+z2ijMbrMMCcooY+hoVJI3tAx+7EUc8RKRs07hSGmmP8NhfuRghZw04nzui+fJkAE/Wd09Y1a+s5GucLbjJJEDJzuuvy/12Vow2QrGLNtbcr3N5SquZmp5nhHfua6NFQgVZ6jO17+2MqqcXObxFQzmWte7QKa1g6UoE/v1/WcOxmYkrYyMVtts7TKMXVWF/Kj+qOLnj9VIgWNHZ38hztb2nOiIQVrwz9bLx0UDZ29dm0zS5b maarten@MaartenPC
@@ -17,14 +19,15 @@ common_users:
       39316337636630343030323833643264633863313961666162653839303739316437306366316339
       3262393334313861323635616330643661346266653937663462
   - name: "pvangastel"
+    uid: 2001
     groups: ["sudo", "admin"]
-    ssh_public_key: ""
+    ssh_public_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArIsT9T6kjkZNM13KRNvT+7Z2c0dsbL1ZvWonAgqpANBbpi4D3s02kP61bWC6RYDEqPb7Y2dd7pgBI+89/JyDzIqF9lJ9OXdRylP8Mrto+Z3/BIx6nqcMNbJheUlqCfwxbmMpNuu5fgU7n9/FmquII+ZEddoJ+KnWtTb9/GhMXTLF7RJbHDK3o7MJmOjbIQIacoDcpq++4KA5UOvAm3a28pjJzOE85wtwc7cB7oEXSTNY8bdka9HgL2SaeUMHD0q8eiKZslJKcSlMuhRqaEpTFuiFSg4X1uGHB30RQU1HzlLooVjVz/8MYWRz60NbV5wFlE3OZOrfDkacoVZ4zmU45w== rsa-key-20181217 DigitalOcean_SonarQube
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXUhZVfGfsPhlBf2rPTT+ay8I35Pda6TQ+Ij4x4BNeo ppthgast@PPTHGAST
     password: ""
   - name: "rschellius"
+    uid: 2002
     groups: ["sudo", "admin"]
-    ssh_public_key: ""
-    password: ""
-  - name: "eargante"
-    groups: ["sudo", "admin"]
-    ssh_public_key: ""
+    ssh_public_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlEmX9eLkX2r2O/OkT6tcSPaYeVcXCZCz1e6VHkv/gzr/JCmVewgnD/8GbxciG0SGnoUrZVoqFsvb6b144p1rwKGp7X0jKSJaBrmTlXY+Y9b86bajs5VDQcZGEJfDbxGwKVr/Ch96UqdNiLlB0TFeo5DOFmTHLeWE+BMT+fbl1hvyYxFOdQlvu2fGCxLfAbNIL5bAP9SYMXnEYCOrGg4Jos4f3ftms++uaI0wnEKniQqewzyP5NpwwwC6QRJv8liHN6nWetO4uGqWHKtItNkXKpsuGTk2n/tn5lw1xgwyYwJ4FtLz3/47X/uY+4sBJJ57fe+rth2Z6at242apoovaB Robin Schellius@DESKTOP-LO8604M
     password: ""
