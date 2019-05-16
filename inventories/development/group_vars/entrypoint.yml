@@ -1,0 +1,4 @@
+---
+nginx_host_domain_names:
+  - test.maarten.dev
+  - test.test.maarten.dev

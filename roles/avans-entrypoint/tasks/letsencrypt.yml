@@ -1,4 +1,5 @@
 ---
+# TODO: Start using DNS instead of webroot for a wildcard certificate!
 - name: "Register whether {{ nginx_host_letsencrypt_live_folder }} certificates exist"
   stat:
     path: "{{ nginx_host_letsencrypt_live_folder }}"
