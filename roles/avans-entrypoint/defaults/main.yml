@@ -1,17 +1,15 @@
 ---
 nginx_config_directory: /etc/avans-informatica-breda.nl/nginx
-nginx_config_requirements:
-  - { src: /etc/avans-informatica-breda.nl/nginx/nginx.conf, dest: {{ nginx_config_directory }}/nginx.conf }
-  - { src: /etc/avans-informatica-breda.nl/nginx/conf.d, dest: {{ nginx_config_directory }}/conf.d }
+local_nginx_config_directory: etc/avans-informatica-breda.nl/nginx
 
 nginx_config_owner: "{{ default_user.name }}"
-nginx_config_group: "{{ default_user.name }}"
+nginx_config_group: "{{ default_group.name }}"
 nginx_webroot_directory: /var/www/letsencrypt
 
 nginx_host_letsencrypt_live_folder: /etc/letsencrypt/live
-nginx_host_letsencrypt_email: rschellius@avans.nl
+nginx_host_letsencrypt_email: example@example.com
 nginx_host_letsencrypt_post_hook: 'docker restart $(docker ps -q --filter="name=nginx")'
-nginx_host_letsencrypt_system_folder: /etc/system/system
+nginx_host_letsencrypt_system_folder: /etc/systemd/system
 nginx_host_letsencrypt_service_name: certbot-renewal.timer
 nginx_host_letsencrypt_system_files:
   - src: "etc/systemd/system/certbot-renewal.service.j2"
@@ -33,8 +31,6 @@ default_user:
 
 project_name: avans_entrypoint
 project_dir: /srv/app
-project_files:
-  - src: "srv/app/docker-compose.yml"
-    dest: "{{ project_dir }}/docker-compose.yml"
+local_project_dir: srv/app
 project_docker_files:
   - "{{ project_dir }}/docker-compose.yml"

@@ -1,26 +1,18 @@
 ---
-- name: "Copy selected project files to {{ project_dir }}"
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ default_user }}"
-    group: "{{ default_group }}"
-    force: yes
-  with_items: "{{ project_files }}"
-
-- name: "Ensure www directory exists in {{ project_dir }}"
+- name: "Ensure {{ project_dir }}"
   file:
-    path: "{{ project_dir }}/www"
     state: directory
-    owner: "{{ default_user }}"
-    group: "{{ default_group }}"
+    path: "{{ project_dir }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
 
-- name: "Ensure static files are in {{ project_dir }}"
+- name: "Ensure files in {{ project_dir }}"
   copy:
-    src: "{{ project_dir }}/www"
-    dest: "{{ project_dir }}/www/"
-    owner: "{{ default_user }}"
-    group: "{{ default_group }}"
+    src: "{{ local_project_dir }}"
+    dest: "{{ project_dir }}/.."
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+    force: yes
 
 - name: "Restart Docker containers from {{ project_name }} with files in {{ project_dir }}"
   docker_service:

@@ -11,3 +11,10 @@
     group: "{{ default_user.group }}"
     groups: "{{ default_user.groups }}"
     shell: /sbin/nologin
+
+- name: "Ensure common users are in the docker group"
+  user:
+    name: "{{ item.name }}"
+    groups: [docker]
+    append: yes
+  with_items: "{{ common_users }}"

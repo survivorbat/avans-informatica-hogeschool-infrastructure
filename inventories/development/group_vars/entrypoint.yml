@@ -1,4 +1,5 @@
 ---
-nginx_host_domain_names:
-  - test.maarten.dev
-  - test.test.maarten.dev
+pip_install_packages:
+  - name: docker
+  - name: docker-compose
+  - name: pyopenssl

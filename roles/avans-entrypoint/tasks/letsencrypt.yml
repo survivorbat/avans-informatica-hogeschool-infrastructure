@@ -1,17 +1,18 @@
 ---
-# TODO: Start using DNS instead of webroot for a wildcard certificate!
+# TODO: Change webroot challenge to DNS challenge with DigitalOcean API
 - name: "Register whether {{ nginx_host_letsencrypt_live_folder }} certificates exist"
   stat:
     path: "{{ nginx_host_letsencrypt_live_folder }}"
   register: stat_fullchain
 
-- name: "Run certbot challenge if letsencrypt has not been installed"
+- name: "Run certbot challenges if letsencrypt has not been installed"
   command: "certbot certonly
       --agree-tos
       -m {{ nginx_host_letsencrypt_email }}
-      -d {{ nginx_host_domain_names.join('') }}
+      -d '{{ item }}'
       --standalone
       -n"
+  with_items: "{{ nginx_host_domain_names }}"
   when: stat_fullchain.stat.exists == False
 
 - name: "Run certbot challenges if letsencrypt has already been installed"
@@ -19,9 +20,11 @@
     --agree-tos
     -m {{ nginx_host_letsencrypt_email }}
     -w {{ nginx_webroot_directory }}
-    -d {{ nginx_host_domain_names.join('') }}
+    -d {{ item }}
     --webroot
     -n"
+  with_items: "{{ nginx_host_domain_names }}"
+  when: stat_fullchain.stat.exists == True
 
 - name: "Copy service and timer templates for service {{ nginx_host_letsencrypt_service_name }} to {{ nginx_host_letsencrypt_system_folder }}"
   template:
@@ -38,10 +41,10 @@
     state: started
     enabled: yes
 
-- name: "Ensure dhparam.pem exists for domains at {{ nginx_host_letsencrypt_live_folder }} with size {{ nginx_host_letsencrypt_dhparam_size }}"
+- name: "Ensure dhparam.pem exists for domains at {{ nginx_host_letsencrypt_live_folder }}"
   openssl_dhparam:
     path: "{{ nginx_host_letsencrypt_live_folder }}/{{ item }}/dhparam.pem"
-    owner: "{{ default_user }}"
-    group: "{{ default_group }}"
-    size: "{{ nginx_host_letsencrypt_dhparam_size }}"
+    owner: "{{ nginx_config_owner }}"
+    group: "{{ nginx_config_group }}"
+    size: 2024
   with_items: "{{ nginx_host_domain_names }}"

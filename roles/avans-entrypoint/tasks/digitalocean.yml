@@ -1,8 +1,0 @@
----
-- name: "Make sure all domains point to entrypoint IP"
-  digital_ocean_domain:
-    state: present
-    name: "{{ item }}"
-    oauth_token: "{{ digitalocean_token }}"
-    ip: "{{ ansible_default_ipv4.address }}"
-  with_items: "{{ nginx_host_domain_names }}"

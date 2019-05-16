@@ -72,7 +72,7 @@ het wachtwoord aan een administrator.
 Om een gebruikersaccount wachtwoord toe te voegen moet eerst het wachtwoord gehasht worden
 met het commando:
 
-`openssl passwd`
+`openssl passwd -1`
 
 Hieruit volgt een hash, deze hash moet vervolgend encrypted worden met de ansible-vault
 en kan vervolgens toegevoegd worden aan.
