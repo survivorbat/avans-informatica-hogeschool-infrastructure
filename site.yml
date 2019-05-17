@@ -1,24 +1,29 @@
 ---
+# Ensure python is installed on remote host
 - name: python
   hosts: all
   gather_facts: no
-  become: "yes"
-  tags: server_install
   tasks:
-    - name: "Ensure python"
-      raw: "sudo apt update && sudo apt -y install python"
+    - name: Ensure python
+      raw: sudo apt update && sudo apt -y install python
 
+# Ensure common settings are set on all servers
 - name: common
-  hosts: "all"
-  become: "yes"
+  hosts: all
   roles:
-    - { role: "common", tags: "common" }
+    - common
 
+# Ensure Entrypoint servers
 - name: entrypoint
-  hosts: "entrypoint"
-  become: "yes"
+  hosts: entrypoint
   roles:
-    - { role: geerlingguy.docker, tags: server_install }
-    - { role: geerlingguy.certbot, tags: server_install }
-    - { role: geerlingguy.pip, tags: server_install }
-    - { role: avans-entrypoint, tags: server_deploy }
+    - geerlingguy.docker
+    - geerlingguy.certbot
+    - geerlingguy.pip
+    - avans-entrypoint
+
+# Ensure Curriculum Viewer servers
+#- name: Curriculum Viewer
+
+# Ensure SonarQube servers
+#- name: sonarqube

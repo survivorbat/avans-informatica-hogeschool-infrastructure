@@ -18,7 +18,6 @@
 
 - name: "Ensure files in {{ project_dir }}"
   copy:
-    state: file
     src: "{{ project_dir | regex_replace('^\\/', '') + '/' + item.path }}"
     dest: "{{ project_dir + '/' + item.path }}"
     owner: "{{ default_user.name }}"
