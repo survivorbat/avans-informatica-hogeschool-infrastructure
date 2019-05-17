@@ -33,7 +33,7 @@ common_users:
     # TODO: Add encrypted password
     password: ""
 
-nginx_host_letsencrypt_email: djbatcat@gmail.com
+nginx_host_letsencrypt_email: r.schellius@avans.nl
 
 # TODO: Add encrypted token
 digitalocean_token: ""

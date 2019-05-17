@@ -8,8 +8,7 @@ services:
       - 80:8080
       - 443:8443
     volumes:
-      - /var/www/letsencrypt:/var/www/letsencrypt
-      - /etc/letsencrypt:/etc/letencrypt
-      - /srv/app/www:/srv/app/www
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /srv/app/www:/srv/html
       - /etc/avans-informatica-breda.nl/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /etc/avans-informatica-breda.nl/nginx/conf.d:/etc/nginx/conf.d

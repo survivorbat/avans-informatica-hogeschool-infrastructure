@@ -1,5 +1,5 @@
 ---
-- name: Ensure python
+- name: python
   hosts: all
   gather_facts: no
   become: "yes"
@@ -8,12 +8,14 @@
     - name: "Ensure python"
       raw: "sudo apt update && sudo apt -y install python"
 
-- hosts: "all"
+- name: common
+  hosts: "all"
   become: "yes"
   roles:
     - { role: "common", tags: "common" }
 
-- hosts: "entrypoint"
+- name: entrypoint
+  hosts: "entrypoint"
   become: "yes"
   roles:
     - { role: geerlingguy.docker, tags: server_install }

@@ -35,6 +35,7 @@ zonder hier iets van te merken.
 
 De configuratie van deze proxy bevindt zich in `roles/avans-entrypoint/files/etc/avans-informatica-breda/nginx`.
 De webroot van deze entrypoint server is te vinden in de map `roles/avans-entrypoint/files/srv/app/www`.
+Alle waarden uit de pipeline kunnen in deze templates gebruikt worden indien gewenst.
 
 Indien een ontwikkelaar wenst een server toe te voegen aan deze configuratie kan er een configuratie bestand
 toegevoegd worden en kan het domein gedefiniëerd worden in de group_vars.

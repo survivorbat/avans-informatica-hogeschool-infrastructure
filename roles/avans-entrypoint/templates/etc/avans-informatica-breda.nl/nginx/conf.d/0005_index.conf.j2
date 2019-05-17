@@ -1,0 +1,10 @@
+server {
+    listen 8443 ssl default;
+
+    root /srv/html;
+
+    server_name {{ inventory_hostname }};
+
+    location / {
+    }
+}

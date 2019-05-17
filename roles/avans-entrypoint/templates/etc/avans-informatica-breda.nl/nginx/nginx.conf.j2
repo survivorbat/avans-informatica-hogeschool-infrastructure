@@ -44,7 +44,7 @@ http {
     # Referrer policy
     add_header Referrer-Policy no-referrer always;
     # Strict transport security
-    #add_header Strict-Transport-Security "max-age=360000; includeSubDomains; preload" always;
+    add_header Strict-Transport-Security "max-age=360000; preload" always;
 
     # Enable gzip
     gzip on;

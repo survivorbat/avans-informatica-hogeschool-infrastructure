@@ -1,24 +1,21 @@
 ---
-- name: "Ensure {{ nginx_config_directory }}"
+- name: "Ensure nginx config directories"
   file:
     state: directory
-    path: "{{ nginx_config_directory }}"
-    owner: "{{ nginx_config_owner }}"
-    group: "{{ nginx_config_group }}"
+    path: "{{ nginx_config_directory | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ nginx_config_directory + '/' + item.path | replace('.j2', '') }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
     mode: 0755
-
-- name: "Ensure {{ nginx_webroot_directory }}"
-  file:
-    state: directory
-    path: "{{ nginx_webroot_directory }}"
-    owner: "{{ nginx_config_owner }}"
-    group: "{{ nginx_config_group }}"
-    mode: 0755
+  with_filetree: "../templates{{ nginx_config_directory }}"
+  when: item.state == 'directory'
 
 - name: "Ensure nginx files in {{ nginx_config_directory }}"
-  copy:
-    src: "{{ local_nginx_config_directory }}"
-    dest: "{{ nginx_config_directory }}../"
-    owner: "{{ nginx_config_owner }}"
-    group: "{{ nginx_config_group }}"
+  template:
+    src: "{{ nginx_config_directory | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ nginx_config_directory + '/' + item.path | replace('.j2', '') }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
     mode: 0755
+  with_filetree: "../templates/{{ nginx_config_directory }}"
+  when: item.state == 'file'

@@ -1,50 +1,43 @@
 ---
-# TODO: Change webroot challenge to DNS challenge with DigitalOcean API
-- name: "Register whether {{ nginx_host_letsencrypt_live_folder }} certificates exist"
-  stat:
-    path: "{{ nginx_host_letsencrypt_live_folder }}"
-  register: stat_fullchain
+- name: "Ensure /etc/letsencrypt/credentials.ini"
+  template:
+    dest: "/etc/letsencrypt/credentials.ini"
+    src: "etc/letsencrypt/credentials.ini.j2"
+    mode: "500"
+    owner: root
+    group: root
 
-- name: "Run certbot challenges if letsencrypt has not been installed"
-  command: "certbot certonly
-      --agree-tos
-      -m {{ nginx_host_letsencrypt_email }}
-      -d '{{ item }}'
-      --standalone
-      -n"
-  with_items: "{{ nginx_host_domain_names }}"
-  when: stat_fullchain.stat.exists == False
-
-- name: "Run certbot challenges if letsencrypt has already been installed"
+- name: "Run certbot challenges"
   command: "certbot certonly
     --agree-tos
+    --dns-digitalocean
     -m {{ nginx_host_letsencrypt_email }}
-    -w {{ nginx_webroot_directory }}
-    -d {{ item }}
-    --webroot
+    -d {{ '*.' + inventory_hostname }}
+    -d {{ inventory_hostname }}
+    --expand
+    --dns-digitalocean-credentials=/etc/letsencrypt/credentials.ini
     -n"
-  with_items: "{{ nginx_host_domain_names }}"
-  when: stat_fullchain.stat.exists == True
 
-- name: "Copy service and timer templates for service {{ nginx_host_letsencrypt_service_name }} to {{ nginx_host_letsencrypt_system_folder }}"
+- name: "Copy service and timer templates for certbot"
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: "644"
     owner: root
     group: root
-  with_items: "{{ nginx_host_letsencrypt_system_files }}"
+  with_items:
+    - { src: etc/systemd/system/certbot-renewal.service.j2, dest: /etc/systemd/system/certbot-renewal.service }
+    - { src: etc/systemd/system/certbot-renewal.timer.j2, dest: /etc/systemd/system/certbot-renewal.timer }
 
-- name: "Start and enable service {{ nginx_host_letsencrypt_service_name }}"
+- name: "Start and enable service"
   service:
-    name: "{{ nginx_host_letsencrypt_service_name }}"
+    name: certbot-renewal.timer
     state: started
     enabled: yes
 
-- name: "Ensure dhparam.pem exists for domains at {{ nginx_host_letsencrypt_live_folder }}"
+- name: "Ensure dhparam.pem"
   openssl_dhparam:
-    path: "{{ nginx_host_letsencrypt_live_folder }}/{{ item }}/dhparam.pem"
-    owner: "{{ nginx_config_owner }}"
-    group: "{{ nginx_config_group }}"
+    path: "/etc/letsencrypt/live/{{ inventory_hostname }}/dhparam.pem"
+    owner: root
+    group: root
     size: 2024
-  with_items: "{{ nginx_host_domain_names }}"
