@@ -3,6 +3,8 @@ server {
 
     server_name inzicht.{{ inventory_hostname }};
 
+    root /srv/html;
+
     location / {
         proxy_pass http://inzicht;
         proxy_set_header X-Real-IP $remote_addr;
@@ -14,6 +16,7 @@ server {
         limit_req zone=req_limit_per_ip burst=20 nodelay;
         limit_conn conn_limit_per_ip 10;
     }
+
     location /api {
         proxy_pass http://inzichtbackend;
         proxy_set_header X-Real-IP $remote_addr;
@@ -25,4 +28,6 @@ server {
         limit_req zone=req_limit_per_ip burst=20 nodelay;
         limit_conn conn_limit_per_ip 10;
     }
+
+    include /etc/nginx/snippets/errors.conf;
 }

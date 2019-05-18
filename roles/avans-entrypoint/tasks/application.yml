@@ -1,4 +1,9 @@
 ---
+- name: "Cleanup old {{ project_dir }}"
+  file:
+    state: absent
+    path: "{{ project_dir }}"
+
 - name: "Ensure {{ project_dir }}"
   file:
     state: directory

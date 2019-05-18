@@ -12,3 +12,4 @@ services:
       - /srv/app/www:/srv/html
       - /etc/avans-informatica-breda.nl/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /etc/avans-informatica-breda.nl/nginx/conf.d:/etc/nginx/conf.d
+      - /etc/avans-informatica-breda.nl/nginx/snippets:/etc/nginx/snippets

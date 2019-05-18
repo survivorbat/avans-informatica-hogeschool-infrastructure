@@ -1,4 +1,9 @@
 ---
+- name: "Cleanup old {{ nginx_config_directory }}"
+  file:
+    state: absent
+    path: "{{ nginx_config_directory }}"
+
 - name: "Ensure nginx config directories"
   file:
     state: directory

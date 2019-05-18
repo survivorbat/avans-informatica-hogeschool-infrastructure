@@ -1,7 +1,8 @@
 ---
 pip_install_packages:
   - name: setuptools
+  - name: pyopenssl
+    version: 16.2.0
+  - name: certbot-dns-digitalocean
   - name: docker
   - name: docker-compose
-  - name: pyopenssl==16.2.0
-  - name: certbot-dns-digitalocean

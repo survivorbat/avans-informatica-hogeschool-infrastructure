@@ -1,0 +1,13 @@
+server {
+    listen 8443 ssl;
+
+    server_name {{ inventory_hostname }};
+
+    root /srv/html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    include /etc/nginx/snippets/errors.conf;
+}

@@ -11,4 +11,6 @@ server {
     location / {
         return 301 https://$host$request_uri;
     }
+
+    include /etc/nginx/snippets/errors.conf;
 }
