@@ -9,6 +9,9 @@ De scripts in deze repository zorgen er bijvoorbeeld voor dat de benodigde servi
 draaien, dat Docker geïnstalleerd, dat de juiste gebruikers zijn aangemaakt is of dat de juiste configuratie in een
 map geplaatst wordt.
 
+Ideaal zou zijn om _alle_ draaiende systemen automatisch via deze repository
+te kunnen deployen.
+
 ## Avans Informatica Infrastructuur
 
 ### Basis instellingen
