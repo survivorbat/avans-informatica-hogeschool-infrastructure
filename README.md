@@ -38,7 +38,7 @@ De webroot van deze entrypoint server is te vinden in de map `roles/avans-entryp
 Alle waarden uit de pipeline kunnen in deze templates gebruikt worden indien gewenst.
 
 Indien een ontwikkelaar wenst een server toe te voegen aan deze configuratie kan er een configuratie bestand
-toegevoegd worden en kan het domein gedefiniëerd worden in de group_vars.
+toegevoegd worden.
 
 ## Workflow
 
@@ -83,7 +83,8 @@ en kan vervolgens toegevoegd worden aan.
 Vanwege het feit dat wachtwoorden in SSH gebrute-forced kunnen worden wordt er gebruik
 gemaakt van SSh sleutels om te communiceren met servers. Een sleutel kan makkelijk
 gegenereerd worden met het commando `ssh-keygen -t ed25519`, dit levert een sleutel op
-gemaakt aan de hand van het ed25519 algoritme i.p.v. SSH.
+gemaakt aan de hand van het ed25519 algoritme i.p.v. RSA.
 
-Deze publieke sleutel kan vervolgens in het /home/(gebruiker)/.ssh/authorized_keys bestand
-geplaatst worden van een server om toegang te krijgen via ssh.
+Deze publieke sleutel kan vervolgens in de `all.yml` geplaatst worden in de `inventories/production/group_vars`
+om een sleutel aan je gebruiker te koppelen. Om manueel toegang te krijgen tot een server
+kan de sleutel toegevoegd worden aan `/home/<gebruiker>/.ssh/authorized_keys` op de server.
