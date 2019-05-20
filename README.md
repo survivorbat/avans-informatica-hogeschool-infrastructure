@@ -1,8 +1,8 @@
 # Avans Informatica Infrastructure
 
-Deze repository bevat alle van de huidige infrastructuur van het Avans Informatica Breda 
-docenten systeem. De scripts in deze repository zorgen ervoor dat een lege droplet (server) of meerdere droplets
-zonder handmatig ingrijpen volledig wordt ingericht met libraries etc. Momenteel wordt
+Deze repository bevat de configuratie voor de huidige infrastructuur van het Avans Informatica Breda 
+applicatielandschap. De scripts in deze repository zorgen ervoor dat een lege droplet (server)
+zonder handmatig ingrijpen volledig wordt ingericht tot een draaiend systeem. Momenteel wordt
 bijvoorbeeld de reverse-proxy server via de pipeline volledig opgezet met configuratie
 en https certificaten.
 
@@ -18,7 +18,7 @@ te kunnen deployen.
 Momenteel worden er op **alle** servers de volgende stappen genomen:
 - Verzeker dat de users (bv. rschellius, pvangastel) aangemaakt worden met de public keys beschikbaar
 - Verzeker dat er alleen via SSH kan ingelogd worden met public keys en dat SSH goed ingesteld staat
-- Verzeker dat er zekere instellingen goed staan i.v.m. security
+- Verzeker dat de kernel extra security instellingen bevat
 
 ### Entrypoint
 
