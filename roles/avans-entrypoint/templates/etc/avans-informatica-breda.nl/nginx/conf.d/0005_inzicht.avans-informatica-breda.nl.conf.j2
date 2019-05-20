@@ -5,6 +5,8 @@ server {
 
     root /srv/html;
 
+    # TODO: Let the upstream take care of routing requests to backend/frontend instead of the reverse proxy
+
     location / {
         proxy_pass http://inzicht;
         proxy_set_header X-Real-IP $remote_addr;
