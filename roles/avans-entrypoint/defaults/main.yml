@@ -1,9 +1,18 @@
 ---
-nginx_config_directory: /etc/nginx
-nginx_config_requirements:
-  - { src: nginx.conf, dest: {{ nginx_config_directory }}/nginx.conf }
-  - { src: conf.d, dest: {{ nginx_config_directory }}/conf.d }
+nginx_config_directory: /etc/avans-informatica-breda.nl/nginx
+nginx_host_letsencrypt_email: example@example.com
 
-nginx_config_owner: nobody
-nginx_config_group: nobody
-nginx_config_mode: 0755
+default_group:
+  gid: 9000
+  name: "rungroup"
+
+default_user:
+  uid: 9000
+  name: "runuser"
+  group: "{{ default_group.name }}"
+  groups: [docker]
+
+project_name: entrypoint
+project_dir: /srv/app
+project_docker_files:
+  - "{{ project_dir }}/docker-compose.yml"

@@ -1,8 +1,7 @@
-
 language: python
 
 python:
-  - "2.7"
+  - "3.6"
 
 install:
   - pip install ansible docker
@@ -14,7 +13,7 @@ before_script:
   - echo -e $vaultpassword > ../.vault-password
 
 script:
-  - if [ $TRAVIS_BRANCH == "master" ]; then ansible-playbook -e docker_password=$docker_password -u root -i inventories/production site.yml --vault-password-file=../.vault-password; fi
+  - if [ $TRAVIS_BRANCH == "master" ]; then ansible-playbook -u root -i inventories/production site.yml --vault-password-file=../.vault-password; fi
 
 services:
   - docker

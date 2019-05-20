@@ -1,16 +1,26 @@
 ---
-  - name: "Ensure {{ nginx_config_directory }} exists"
-    file:
-      state: directory
-      owner: "{{ nginx_config_owner }}"
-      group: "{{ nginx_config_group }}"
-      mode: "{{ nginx_config_mode }}"
+- name: "Cleanup old {{ nginx_config_directory }}"
+  file:
+    state: absent
+    path: "{{ nginx_config_directory }}"
 
-  - name: "Ensure nginx files are present in {{ nginx_config_directory }}"
-    copy:
-      src: "{{ item.src }}"
-      dest: "{{ item.dest }}"
-      owner: "{{ nginx_config_owner }}"
-      group: "{{ nginx_config_group }}"
-      mode: "{{ nginx_config_mode }}"
-    with_items: "{{ nginx_config_requirements }}"
+- name: "Ensure nginx config directories"
+  file:
+    state: directory
+    path: "{{ nginx_config_directory | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ nginx_config_directory + '/' + item.path | replace('.j2', '') }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+    mode: 0755
+  with_filetree: "../templates{{ nginx_config_directory }}"
+  when: item.state == 'directory'
+
+- name: "Ensure nginx files in {{ nginx_config_directory }}"
+  template:
+    src: "{{ nginx_config_directory | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ nginx_config_directory + '/' + item.path | replace('.j2', '') }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+    mode: 0755
+  with_filetree: "../templates/{{ nginx_config_directory }}"
+  when: item.state == 'file'

@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 1.4em;
+}
+
+.page--container {
+    width: 100vw;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.container--title {
+    color: #C6002A;
+}

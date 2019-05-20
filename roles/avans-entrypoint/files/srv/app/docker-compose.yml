@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  nginx:
+    image: nginx:1.16.0-alpine
+    restart: always
+    ports:
+      - 80:8080
+      - 443:8443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /srv/app/www:/srv/html
+      - /etc/avans-informatica-breda.nl/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/avans-informatica-breda.nl/nginx/conf.d:/etc/nginx/conf.d
+      - /etc/avans-informatica-breda.nl/nginx/snippets:/etc/nginx/snippets

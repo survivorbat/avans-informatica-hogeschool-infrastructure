@@ -1,0 +1,39 @@
+---
+- name: "Cleanup old {{ project_dir }}"
+  file:
+    state: absent
+    path: "{{ project_dir }}"
+
+- name: "Ensure {{ project_dir }}"
+  file:
+    state: directory
+    path: "{{ project_dir }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+
+- name: "Ensure project directories in {{ project_dir }}"
+  file:
+    state: directory
+    src: "{{ project_dir | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ project_dir + '/' + item.path }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+  with_filetree: "{{ project_dir | regex_replace('^\\/', '') }}"
+  when: item.state == 'directory'
+
+- name: "Ensure files in {{ project_dir }}"
+  copy:
+    src: "{{ project_dir | regex_replace('^\\/', '') + '/' + item.path }}"
+    dest: "{{ project_dir + '/' + item.path }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+  with_filetree: "{{ project_dir | regex_replace('^\\/', '') }}"
+  when: item.state == 'file'
+
+- name: "Restart Docker containers from {{ project_name }} with files in {{ project_dir }}"
+  docker_service:
+    state: present
+    restarted: yes
+    project_name: "{{ project_name }}"
+    project_src: "{{ project_dir }}"
+    files: "{{ project_docker_files }}"
