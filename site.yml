@@ -1,5 +1,5 @@
 ---
-# Ensure python is installed on remote host
+# Zorg dat alle hosts python hebben geïnstalleerd
 - hosts: all
   gather_facts: no
   tags: install
@@ -7,13 +7,13 @@
     - name: Ensure python
       raw: sudo apt update && sudo apt -y install python
 
-# Ensure common settings are set on all servers
+# Zorg dat alle hosts/droplets deze instellingen krijgen doorgevoerd
 - hosts: all
   tags: install
   roles:
     - role: common
 
-# Ensure Entrypoint servers
+# Zorg dat de entrypoint server(s) draaien
 - hosts: entrypoint
   roles:
     - role: geerlingguy.docker
@@ -25,8 +25,8 @@
     - role: avans-entrypoint
       tags: deploy
 
-# Ensure Curriculum Viewer servers
+# Zorg dat de curriculumviewer server(s) draaien
 #- name: Curriculum Viewer
 
-# Ensure SonarQube servers
+# Zorg dat de sonarqube server(s) draaien
 #- name: sonarqube

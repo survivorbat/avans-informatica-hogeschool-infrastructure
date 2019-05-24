@@ -14,6 +14,7 @@ before_script:
 
 script:
   - if [ $TRAVIS_BRANCH == "master" ]; then ansible-playbook -u root -i inventories/production site.yml --vault-password-file=../.vault-password; fi
+  - if [ $TRAVIS_BRANCH == "test" ]; then ansible-playbook -u root -i inventories/development site.yml --vault-password-file=../.vault-password; fi
 
 services:
   - docker

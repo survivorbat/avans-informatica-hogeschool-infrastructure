@@ -13,6 +13,7 @@
     password: "{{ item.password|default(omit) }}"
     groups: "{{ item.groups|default(omit) }}"
     shell: "/bin/bash"
+    append: yes
     uid: "{{ item.uid|default(omit) }}"
   with_items: "{{ common_users }}"
 

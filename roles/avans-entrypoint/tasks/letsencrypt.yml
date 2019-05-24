@@ -40,4 +40,4 @@
     path: "/etc/letsencrypt/live/{{ inventory_hostname }}/dhparam.pem"
     owner: root
     group: root
-    size: 2024
+    size: 2048
