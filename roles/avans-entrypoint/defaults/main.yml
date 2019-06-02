@@ -1,6 +1,7 @@
 ---
 nginx_config_directory: /etc/avans-informatica-breda.nl/nginx
 nginx_host_letsencrypt_email: example@example.com
+digitalocean_token: ""
 
 default_group:
   gid: 9000
