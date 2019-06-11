@@ -32,7 +32,7 @@ de gebruiker door naar een backend. Een student die
 sonarqube.avans-informatica.breda.nl bezoekt wordt bijvoorbeeld doorgestuurd naar de SonarQube backend
 zonder hier iets van te merken. 
 
-De configuratie van deze proxy bevindt zich in `roles/avans-entrypoint/files/etc/avans-informatica-breda/nginx`.
+De configuratie van deze proxy bevindt zich in `roles/avans-entrypoint/templates/etc/avans-informatica-breda/nginx`.
 De webroot van deze entrypoint server is te vinden in de map `roles/avans-entrypoint/files/srv/app/www`.
 
 Indien een ontwikkelaar wenst een server toe te voegen aan deze configuratie kan er een configuratie bestand
