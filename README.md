@@ -51,12 +51,6 @@ Om deze reden zal er voornamelijk gewerkt worden op de **develop** branch en wor
 contributors gevraagd of deze pull requests willen aanmaken indien zij klaar zijn
 met het aanpassen of toevoegen van nieuwe code.
 
-Er is ook een **test** branch beschikbaar, deze is zo ingesteld dat alle commits hierop
-gedeployed worden naar de tijdelijke **test.maarten.dev** server. Deze kan gebruikt
-worden om een deployment te testen voor de reverse proxy, dit is echter tijdelijk
-en er zal spoedig gewerkt moeten worden aan een testserver of ander
-soort proefmiddel om de deployments uit te testen.
-
 ### Gevoelige waarden in de repository
 
 Alle waarden die privé dienen te blijven (Oauth secrets, private keys) worden
