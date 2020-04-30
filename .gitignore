@@ -1,0 +1,19 @@
+# Editors
+.idea/
+.vscode/
+docs/**/*.pdf
+
+# Local .terraform directories
+*.terraform**
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform/avans_key

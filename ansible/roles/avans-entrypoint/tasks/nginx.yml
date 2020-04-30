@@ -1,0 +1,14 @@
+---
+- name: "Cleanup old {{ nginx_config_directory }}"
+  file:
+    state: absent
+    path: "{{ nginx_config_directory }}"
+
+- name: "Ensure nginx config in {{ nginx_config_directory }}"
+  file:
+    state: directory
+    path: "{{ nginx_config_directory }}"
+    dest: "/{{ nginx_config_directory }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+    mode: 0755

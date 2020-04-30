@@ -1,0 +1,67 @@
+---
+# Parse json files for configuration
+- hosts: localhost
+  connection: local
+  vars:
+    student_config: ../student-machines.tfvars.json
+    docent_config: ../docent-machines.tfvars.json
+  tasks:
+    # Get student config file contents
+    - name: "Fetch {{ student_config }}"
+      shell: "cat {{ student_config }}"
+      register: "student_data"
+
+    # Get docent config file contents
+    - name: "Fetch {{ docent_config }}"
+      shell: "cat {{ docent_config }}"
+      register: "docent_data"
+
+    # Parse data from student and docent data
+    - name: "Parse json data from json files"
+      set_fact:
+        student_data: "{{ student_data.stdout | from_json }}"
+        docent_data: "{{ docent_data.stdout | from_json }}"
+
+    # Add student hosts by prepending the domain with the student number
+    - name: "Add student hosts"
+      add_host:
+        name: "{{ item.student_number }}.student.{{ domain | mandatory }}"
+        groups: "students"
+
+        # Add username and ssh_key to vars of the host
+        username: "s{{ item.student_number }}"
+        user_ssh_key: "{{ item.user_ssh_key }}"
+      loop: "{{ student_data.student_vms }}"
+
+    # Add docent host by prepending the desired subdomain to the main domain
+    # If the subdomain equals @ then remove the period and only register the domain
+    - name: "Add docent hosts"
+      add_host:
+        name: "{{ item.subdomain | replace('@', '') }}{{ '.' if item.subdomain != '@' else '' }}{{ domain | mandatory }}"
+        groups: "{{ item.ansible_group_name }}"
+
+        # Add username and ssh_key to vars of the host
+        username: "s{{ item.docent_name | lower | replace(' ', '') }}"
+        user_ssh_key: "{{ item.user_ssh_key }}"
+      loop: "{{ docent_data.docent_vms }}"
+
+# Zorg dat alle hosts/droplets deze instellingen krijgen doorgevoerd
+- hosts: all
+  roles:
+    - geerlingguy.docker
+    - common
+
+# Zorg dat de entrypoint server(s) draaien
+- hosts: entrypoint
+  vars:
+    pip_install_packages:
+      - name: setuptools
+      - name: pyopenssl
+        version: 16.2.0
+      - name: certbot-dns-digitalocean
+      - name: docker
+      - name: docker-compose
+  roles:
+    - geerlingguy.certbot
+    - geerlingguy.pip
+    - avans-entrypoint

@@ -1,0 +1,20 @@
+---
+- name: "Ensure group {{ default_group.name }} exists"
+  group:
+    gid: "{{ default_group.gid }}"
+    name: "{{ default_group.name }}"
+
+- name: "Ensure user {{ default_user.name }} exists"
+  user:
+    uid: "{{ default_user.uid }}"
+    name: "{{ default_user.name }}"
+    group: "{{ default_user.group }}"
+    groups: "{{ default_user.groups }}"
+    shell: /sbin/nologin
+
+- name: "Ensure common users are in the docker group"
+  user:
+    name: "{{ item.name }}"
+    groups: [docker]
+    append: yes
+  with_items: "{{ common_users }}"

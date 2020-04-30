@@ -1,0 +1,139 @@
+trigger:
+  branches:
+    include:
+      - master
+      - develop
+      - request/*
+      - feature/*
+  paths:
+    include:
+      - deploy-to-digitalocean.yaml
+      - terraform
+      - ansible
+      - docent-machines.tfvars.json
+      - student-machines.tfvars.json
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: gh-templates
+      name: survivorbat/portfolio
+
+variables:
+  domain: avans-informatica-breda.nl
+  azureServiceConnection: ARM-Avans
+
+  terraformImage: 'survivorbat/terraform-scratch:0.12.24'
+  terraformDirectory: '$(Build.SourcesDirectory)/terraform'
+  ansibleImage: 'survivorbat/ansible:v0.4'
+  ansibleDirectory: '$(Build.SourcesDirectory)/terraform/ansible'
+
+  privateKeyName: "avans_key"
+  resourceGroupName: AvansInfra
+
+stages:
+  - stage: Validate
+    displayName: Validate code
+    jobs:
+      - job: Ansible
+        displayName: Ansible Lint
+        steps:
+          - bash: docker pull $(ansibleImage)
+            displayName: Docker pull $(ansibleImage)
+
+          - bash: docker run --rm -v $(ansibleDirectory):/app $(ansibleImage) ansible-lint /app/site.yml
+            continueOnError: true
+            displayName: Run ansible lint in $(ansibleDirectory)
+
+      - job: Terraform
+        displayName: Terraform Validate
+        steps:
+          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+            displayName: 'Replace tokens in terraform/*.tf'
+            inputs:
+              targetFiles: 'terraform/*.tf'
+              tokenPrefix: '__'
+              tokenSuffix: '__'
+
+          - template: pipeline-templates/terraform-validate.yaml@templates
+            parameters:
+              backendType: azurerm
+              backendServiceArm: $(azureServiceConnection)
+              environmentServiceName: $(azureServiceConnection)
+              backendAzureRmStorageAccountName: $(storageAccountName)
+              backendAzureRmResourceGroupName: $(resourceGroupName)
+              backendAzureRmContainerName: $(containerName)
+              backendAzureRmKey: $(azureRmKey)
+              terraformDirectory: $(terraformDirectory)
+
+  - stage: Plan
+    displayName: Plan infrastructuur
+    jobs:
+      - job: Plan_Infra
+        displayName: Plan infrastructuur
+        steps:
+          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+            displayName: 'Replace tokens in terraform/*.tf'
+            inputs:
+              targetFiles: 'terraform/**/*.tf'
+              tokenPrefix: '__'
+              tokenSuffix: '__'
+
+          - template: pipeline-templates/terraform-deploy.yaml@templates
+            parameters:
+              apply: false
+              backendType: azurerm
+              backendServiceArm: $(azureServiceConnection)
+              environmentServiceName: $(azureServiceConnection)
+              backendAzureRmStorageAccountName: $(storageAccountName)
+              backendAzureRmResourceGroupName: $(resourceGroupName)
+              backendAzureRmContainerName: $(containerName)
+              backendAzureRmKey: $(azureRmKey)
+              terraformDirectory: $(terraformDirectory)
+              extraArguments:
+                -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
+                -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+
+  - stage: Deploy
+    displayName: Deploy infrastructuur
+    condition: and(succeeded(), eq(variables['build.sourcebranchname'], 'master'))
+    jobs:
+      - job: Infra_Deploy
+        displayName: Terraform Deploy
+        steps:
+          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+            displayName: 'Replace tokens in terraform/*.tf'
+            inputs:
+              targetFiles: 'terraform/*.tf'
+              tokenPrefix: '__'
+              tokenSuffix: '__'
+
+          - template: pipeline-templates/terraform-deploy.yaml@templates
+            parameters:
+              apply: true
+              backendType: azurerm
+              backendServiceArm: $(azureServiceConnection)
+              environmentServiceName: $(azureServiceConnection)
+              backendAzureRmStorageAccountName: $(storageAccountName)
+              backendAzureRmResourceGroupName: $(resourceGroupName)
+              backendAzureRmContainerName: $(containerName)
+              backendAzureRmKey: $(azureRmKey)
+              terraformDirectory: $(terraformDirectory)
+              extraArguments: |
+                -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
+                -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+
+      - job: Infra_Configure
+        displayName: Ansible
+        dependsOn: Infra_Deploy
+        steps:
+          - template: pipeline-templates/ansible-deploy.yaml@templates
+            parameters:
+              rootDirectory: "$(Build.SourcesDirectory)/ansible"
+              inventoryFileName: inventories/prod.yaml
+              ansibleEnvironment:
+                doToken: $(doToken)
+                domain: $(domain)
+                letsencryptEmail: $(letsencryptEmail)
+              privateKeyName: $(privateKeyName)

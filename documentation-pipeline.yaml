@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+      - master
+      - develop
+  paths:
+    include:
+      - docs
+      - documentation-pipeline.yaml
+
+variables:
+  pandocImage: "survivorbat/pandoc-eisvogel:latest"
+  docsDirectory: "$(Build.SourcesDirectory)/docs"
+
+  outputPath: "./avans_informatica_breda_documentatie_$(Build.SourceBranchname).pdf"
+  artifactName: "Avans Infrastructure Documentation"
+
+stages:
+  - stage: Compile
+    displayName: Compile documentation
+    jobs:
+      - job: Compile
+        displayName: Compile documentation
+        steps:
+          - bash: |
+              docker pull $(pandocImage)
+            displayName: Pull $(pandocImage)
+          - bash: |
+              docker run -u root --rm -v $(docsDirectory):/data -e OUTPUT_PATH=$(outputPath) $(pandocImage) --listings
+            displayName: Compile documentation to $(outputPath)
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: "$(docsDirectory)/$(outputPath)"
+              artifactName: "$(artifactName)"
+            displayName: Publish package as $(artifactName)

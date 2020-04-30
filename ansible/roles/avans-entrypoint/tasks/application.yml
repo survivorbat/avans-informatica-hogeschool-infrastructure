@@ -1,0 +1,33 @@
+---
+- name: "Cleanup old {{ project_dir }}"
+  file:
+    state: absent
+    path: "{{ project_dir }}"
+
+- name: "Ensure {{ project_dir }}"
+  file:
+    state: directory
+    path: "{{ project_dir }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+
+- name: "Ensure files in {{ project_dir }}"
+  copy:
+    src: "{{ project_dir }}"
+    dest: "/{{ project_dir }}"
+    owner: "{{ default_user.name }}"
+    group: "{{ default_group.name }}"
+
+- name: "Ensure nginx container"
+  docker_container:
+    image: "{{ nginx_image }}"
+    name: "{{ nginx_name }}"
+    restart_policy: always
+    published_ports:
+      - 80:8080
+      - 443:8443
+    volumes:
+      - /etc/letsencryp/:/etc/letsencrypt:delegated
+      - /srv/app/www:/srv/html:delegated
+      - /etc/avans-informatica-breda.nl/nginx:/etc/nginx/temp:delegated
+    env: "{{ nginx_environment }}"

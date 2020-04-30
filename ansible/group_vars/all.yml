@@ -1,0 +1,6 @@
+---
+common_users:
+  - name: "{{ username }}"
+    uid: 1000
+    groups: ["sudo", "docker"]
+    ssh_public_key: "{{ user_ssh_key }}"
