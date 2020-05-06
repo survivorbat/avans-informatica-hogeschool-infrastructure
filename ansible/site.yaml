@@ -3,6 +3,7 @@
 - hosts: localhost
   connection: local
   vars:
+    domain: "{{ lookup('ENV', 'domain') }}"
     student_config: ../student-machines.tfvars.json
     docent_config: ../docent-machines.tfvars.json
   tasks:
