@@ -44,6 +44,9 @@ De student zal uiteindelijk kunnen inloggen via SSH met het commando:
 
 Daarnaast is de VM te bereiken via _voorbeeld.student.avans-informatica-breda.nl_.
 
+Indien een student wenst meerdere VMs aan te vragen, moet er een extra nummer toegevoegd worden aan het student_number veld.
+**2121993** wordt bij een tweede VM bijvoorbeeld **21219932**.
+
 \pagebreak
 
 ## Voor Docenten
