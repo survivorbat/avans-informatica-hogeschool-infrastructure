@@ -23,3 +23,11 @@
     state: "present"
     key: "{{ item.ssh_public_key }}"
   with_items: "{{ common_users }}"
+
+- name: "Ensure sudo groups have sudo permission"
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^%{{ item }}'
+    line: '%{{ item }} ALL=(ALL:ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+  with_items: "{{ sudo_groups }}"

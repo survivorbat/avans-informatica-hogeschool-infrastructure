@@ -5,6 +5,9 @@ common_packages: []
 common_users: []
 common_groups: []
 
+sudo_groups:
+  - sudo
+
 common_security_sysctl:
   fs.suid_dumpable: "0"
   kernel.core_uses_pid: "1"
