@@ -120,7 +120,7 @@ stages:
               backendAzureRmContainerName: $(containerName)
               backendAzureRmKey: $(azureRmKey)
               terraformDirectory: $(terraformDirectory)
-              extraArguments: |
+              extraArguments:
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
                 -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
 
