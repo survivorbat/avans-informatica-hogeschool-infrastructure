@@ -5,7 +5,18 @@ Ideaal zou zijn om _alle_ draaiende systemen van docenten automatisch via deze r
 Alle documentatie omtrent Infrastructuur als Code is te vinden in de docs/ map.
 De bestanden in deze map worden automatisch gecompileerd naar een PDF in een pipeline.
 
+De pipelines kun je hier vinden: [dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/_build](https://dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/_build)
+
 ![Workflow diagram](docs/img/high-level.png)
+
+## Opmerkingen/Verbeterpunten
+
+- Studentennummers mogen **alleen** alfanumerieke tekens bevatten. Indien een student meer dan één VM wil gebruiken, moet er een nummer achteraan het studentennummer gezet worden. \
+    **2121993** wordt bv. **21219932** bij een tweede machine. Underscores of dashes zijn niet toegestaan.
+- Terraform identificeert virtuele machines op basis van de plaatst in de VM lijst, dit houdt in dat nieuwe VMS **alleen** aan de **onderkant** van een lijst \
+    mogen toegevoegd worden. VMs mogen ook alleen vanaf de onderkant verwijderd worden.
+
+Deze twee bugs worden z.s.m. verholpen.
 
 ## Avans Informatica Infrastructuur
 
