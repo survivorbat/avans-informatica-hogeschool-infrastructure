@@ -56,16 +56,17 @@ stages:
               tokenPrefix: '__'
               tokenSuffix: '__'
 
-          - template: pipeline-templates/terraform-validate.yaml@templates
-            parameters:
-              backendType: azurerm
-              backendServiceArm: $(azureServiceConnection)
-              environmentServiceName: $(azureServiceConnection)
-              backendAzureRmStorageAccountName: $(storageAccountName)
-              backendAzureRmResourceGroupName: $(resourceGroupName)
-              backendAzureRmContainerName: $(containerName)
-              backendAzureRmKey: $(azureRmKey)
-              terraformDirectory: $(terraformDirectory)
+          - task: TerraformCLI@0
+            inputs:
+              command: 'init'
+              commandOptions: $(terraformDirectory)
+            displayName: Init $(terraformDirectory)
+
+          - task: TerraformCLI@0
+            inputs:
+              command: 'validate'
+              commandOptions: $(terraformDirectory)
+            displayName: Validate $(terraformDirectory)
 
   - stage: Plan
     displayName: Plan infrastructuur
@@ -80,20 +81,19 @@ stages:
               tokenPrefix: '__'
               tokenSuffix: '__'
 
-          - template: pipeline-templates/terraform-deploy.yaml@templates
-            parameters:
-              apply: false
-              backendType: azurerm
-              backendServiceArm: $(azureServiceConnection)
-              environmentServiceName: $(azureServiceConnection)
-              backendAzureRmStorageAccountName: $(storageAccountName)
-              backendAzureRmResourceGroupName: $(resourceGroupName)
-              backendAzureRmContainerName: $(containerName)
-              backendAzureRmKey: $(azureRmKey)
-              terraformDirectory: $(terraformDirectory)
-              extraArguments:
+          - task: TerraformCLI@0
+            inputs:
+              command: 'init'
+              commandOptions: $(terraformDirectory)
+            displayName: Init $(terraformDirectory)
+
+          - task: TerraformCLI@0
+            inputs:
+              command: 'plan'
+              commandOptions:
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
                 -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+            displayName: Apply $(terraformDirectory)
 
   - stage: Deploy
     displayName: Deploy infrastructuur
@@ -109,20 +109,13 @@ stages:
               tokenPrefix: '__'
               tokenSuffix: '__'
 
-          - template: pipeline-templates/terraform-deploy.yaml@templates
-            parameters:
-              apply: true
-              backendType: azurerm
-              backendServiceArm: $(azureServiceConnection)
-              environmentServiceName: $(azureServiceConnection)
-              backendAzureRmStorageAccountName: $(storageAccountName)
-              backendAzureRmResourceGroupName: $(resourceGroupName)
-              backendAzureRmContainerName: $(containerName)
-              backendAzureRmKey: $(azureRmKey)
-              terraformDirectory: $(terraformDirectory)
-              extraArguments:
+          - task: TerraformCLI@0
+            inputs:
+              command: 'apply'
+              commandOptions:
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
                 -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+            displayName: Apply $(terraformDirectory)
 
       - job: Infra_Configure
         displayName: Ansible
