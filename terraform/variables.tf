@@ -18,7 +18,6 @@ variable "master_key" {
 
 variable "student_vms" {
   type = map(object({
-    student_number = string
     image          = string
     size           = string
     backups        = bool
