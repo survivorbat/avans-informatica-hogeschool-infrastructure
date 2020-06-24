@@ -91,9 +91,9 @@ stages:
             inputs:
               command: 'plan'
               commandOptions:
-                $(terraformDirectory)
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
                 -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+                $(terraformDirectory)
             displayName: Plan $(terraformDirectory)
 
   - stage: Deploy
@@ -116,6 +116,7 @@ stages:
               commandOptions:
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
                 -var-file="$(Build.SourcesDirectory)/student-machines.tfvars.json"
+                $(terraformDirectory)
             displayName: Apply $(terraformDirectory)
 
       - job: Infra_Configure
