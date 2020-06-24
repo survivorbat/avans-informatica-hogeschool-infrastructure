@@ -23,13 +23,11 @@ Vervolgens kan geconfigureerd worden welke image de server gebruikt, de grootte 
 ~~~{#studentaanvraag .json caption="JSON code om een VM aan te vragen"}
 {
   "student_vms": [
-    {
-      "student_number": "2121993",
-      "user_ssh_key": "ssh-rsa AAAAB3Nza[...]",
-
+    "2121993": {
       "image": "ubuntu-18-04-x64",
       "size": "s-1vcpu-1gb",
-      "backups": false
+      "backups": false,
+      "user_ssh_key": "..."
     }
   ]
 }
@@ -58,16 +56,13 @@ Daarnaast wordt ook de docent naam gebruikt in plaats van
 ~~~{#docentaanvraag .json caption="JSON code om als docent een VM aan te vragen"}
 {
   "docent_vms": [
-    {
-      "docent_name": "Pascal van Gastel",
-      "user_ssh_key": "ssh-rsa AAAAB3Nza[...]",
-      "subdomain": "voorbeeld",
-      "name": "EntryPoint",
-      "ansible_group_name": "entrypoint",
-
+    "mijnserver": {
       "image": "ubuntu-18-04-x64",
       "size": "s-1vcpu-1gb",
-      "backups": false
+      "backups": false,
+      "user_ssh_key": "..."
+      "docent_name": "Pascal van Gastel"
+      "subdomain": "mijnserver"
     }
   ]
 }

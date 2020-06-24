@@ -31,7 +31,6 @@ variable "docent_vms" {
     subdomain   = string
     docent_name = string
 
-    name    = string
     backups = bool
     image   = string
     size    = string
