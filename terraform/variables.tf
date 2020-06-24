@@ -17,19 +17,19 @@ variable "master_key" {
 }
 
 variable "student_vms" {
-  type = list(object({
+  type = map(object({
     student_number = string
     image          = string
     size           = string
     backups        = bool
   }))
   description = "List of student vms"
-  default     = []
+  default     = {}
 }
 
 variable "docent_vms" {
-  type = list(object({
-    subdomain = string
+  type = map(object({
+    subdomain   = string
     docent_name = string
 
     name    = string
@@ -38,5 +38,5 @@ variable "docent_vms" {
     size    = string
   }))
   description = "List of docent vms"
-  default     = []
+  default     = {}
 }

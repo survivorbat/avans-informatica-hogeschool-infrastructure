@@ -1,7 +1,7 @@
 resource "digitalocean_project" "project" {
-  name    = var.name
+  name        = var.name
   description = var.description
-  purpose = var.purpose
+  purpose     = var.purpose
   environment = var.environment
-  resources = var.resources
+  resources   = var.resources
 }

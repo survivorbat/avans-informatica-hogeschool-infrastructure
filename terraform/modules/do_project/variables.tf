@@ -1,5 +1,5 @@
 variable "description" {
-  type = string
+  type    = string
   default = "A project created using Terraform"
 }
 
@@ -8,16 +8,16 @@ variable "name" {
 }
 
 variable "purpose" {
-  type = string
+  type    = string
   default = "Other"
 }
 
 variable "environment" {
-  type = string
+  type    = string
   default = "Development"
 }
 
 variable "resources" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
