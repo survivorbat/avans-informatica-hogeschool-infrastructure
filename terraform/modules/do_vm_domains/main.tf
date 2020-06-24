@@ -5,6 +5,7 @@ resource "digitalocean_domain" "domain" {
 data "digitalocean_droplet" "droplet" {
   name  = var.do_vm_names[count.index]
   count = length(var.do_vm_names)
+  depends_on = [var.do_vm_names]
 }
 
 resource "digitalocean_record" "record_a" {
