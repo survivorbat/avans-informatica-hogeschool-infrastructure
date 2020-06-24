@@ -33,9 +33,7 @@ module "student_project" {
   description = "Alle VMs voor studenten aangevraagd via Terraform. Gebruik Terraform om wijzigingen aan te brengen!"
   environment = "Production"
   # Place all student vms into this project
-  resources = [
-    module.student_vms.*.urn,
-  ]
+  resources = module.student_vms.*.urn,
   source = "./modules/do_project"
 }
 
@@ -59,7 +57,9 @@ module "student_vms" {
   size     = each.value.size
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
-  tags     = ["student:${each.key}"]
+  tags     = [
+    "student:${each.key}"
+  ]
 }
 
 # Module that handles all the docent vms
@@ -72,5 +72,7 @@ module "docent_vms" {
   size     = each.value.size
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
-  tags     = ["docent:${replace(each.docent_name, " ", "")}"]
+  tags     = [
+    "docent:${replace(each.docent_name, " ", "")}"
+  ]
 }
