@@ -126,6 +126,12 @@ stages:
 
           - task: TerraformCLI@0
             inputs:
+              command: 'init'
+              commandOptions: $(terraformDirectory)
+            displayName: Init $(terraformDirectory)
+
+          - task: TerraformCLI@0
+            inputs:
               command: 'apply'
               commandOptions:
                 -var-file="$(Build.SourcesDirectory)/docent-machines.tfvars.json"
