@@ -71,7 +71,7 @@ module "docent_vms" {
   for_each = var.docent_vms
 
   image    = each.value.image
-  name     = replace(each.key, " ", "-")
+  name     = "${replace(each.key, " ", "-")}.student"
   size     = each.value.size
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
