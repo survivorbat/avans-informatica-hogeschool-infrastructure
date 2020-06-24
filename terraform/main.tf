@@ -48,7 +48,6 @@ module "domain" {
       values(module.student_vms).*.name
   )
   source  = "./modules/do_vm_domains"
-  d
 }
 
 # Module that handles all the student vms
