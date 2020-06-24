@@ -73,6 +73,6 @@ module "docent_vms" {
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
   tags     = [
-    "docent:${replace(each.docent_name, " ", "")}"
+    "docent:${replace(each.value.docent_name, " ", "")}"
   ]
 }
