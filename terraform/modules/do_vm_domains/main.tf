@@ -3,6 +3,7 @@ resource "digitalocean_domain" "domain" {
 }
 
 data "digitalocean_droplet" "droplet" {
+  name  = var.do_vm_names[count.index]
   count = length(var.do_vm_names)
 }
 
