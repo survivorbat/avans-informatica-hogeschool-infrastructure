@@ -49,6 +49,7 @@ stages:
         displayName: Terraform Validate
         steps:
           - task: TerraformInstaller@0
+            displayName: Install Terraform $(terraformVersion)
             inputs:
               terraformVersion: $(terraformVersion)
 
@@ -78,6 +79,7 @@ stages:
         displayName: Plan infrastructuur
         steps:
           - task: TerraformInstaller@0
+            displayName: Install Terraform $(terraformVersion)
             inputs:
               terraformVersion: $(terraformVersion)
 
@@ -111,6 +113,7 @@ stages:
         displayName: Terraform Deploy
         steps:
           - task: TerraformInstaller@0
+            displayName: Install Terraform $(terraformVersion)
             inputs:
               terraformVersion: $(terraformVersion)
 
