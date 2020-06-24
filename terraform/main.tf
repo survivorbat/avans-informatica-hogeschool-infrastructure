@@ -33,7 +33,7 @@ module "student_project" {
   description = "Alle VMs voor studenten aangevraagd via Terraform. Gebruik Terraform om wijzigingen aan te brengen!"
   environment = "Production"
   # Place all student vms into this project
-  resources = module.student_vms.*.urn,
+  resources = module.student_vms.*.urn
   source = "./modules/do_project"
 }
 
