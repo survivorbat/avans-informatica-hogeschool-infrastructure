@@ -16,7 +16,12 @@ module "docent_project" {
   description = "Alle VMs voor docent aangevraagd via Terraform. Gebruik Terraform om wijzigingen aan te brengen!"
   environment = "Production"
   # Place all docent vms and the domain into this project
-  resources = concat([module.domain.domain_urn], module.docent_vms.droplet_urns)
+  resources = concat(
+    [module.domain.domain_urn],
+    module.docent_vms.droplet_urns,
+    # This object contains all our state
+    ["do:space:avans-terraform-state"]
+  )
   source    = "./modules/do_project"
 }
 
