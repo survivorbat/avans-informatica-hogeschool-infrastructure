@@ -13,18 +13,11 @@ trigger:
       - docent-machines.tfvars.json
       - student-machines.tfvars.json
 
-resources:
-  repositories:
-    - repository: templates
-      type: github
-      endpoint: gh-templates
-      name: survivorbat/portfolio
-
 variables:
   domain: avans-informatica-breda.nl
 
   terraformDirectory: '$(Build.SourcesDirectory)/terraform'
-  terraformVersion: "0.13.*"
+  terraformVersion: "0.13.0-beta2"
   ansibleImage: 'survivorbat/ansible:v0.4'
   ansibleDirectory: '$(Build.SourcesDirectory)/terraform/ansible'
 
