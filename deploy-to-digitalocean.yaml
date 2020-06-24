@@ -22,10 +22,9 @@ resources:
 
 variables:
   domain: avans-informatica-breda.nl
-  azureServiceConnection: ARM-Avans
 
-  terraformImage: 'survivorbat/terraform-scratch:0.12.24'
   terraformDirectory: '$(Build.SourcesDirectory)/terraform'
+  terraformVersion: "0.13.*"
   ansibleImage: 'survivorbat/ansible:v0.4'
   ansibleDirectory: '$(Build.SourcesDirectory)/terraform/ansible'
 
@@ -49,6 +48,10 @@ stages:
       - job: Terraform
         displayName: Terraform Validate
         steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
           - task: qetza.replacetokens.replacetokens-task.replacetokens@3
             displayName: 'Replace tokens in terraform/*.tf'
             inputs:
@@ -74,6 +77,10 @@ stages:
       - job: Plan_Infra
         displayName: Plan infrastructuur
         steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
           - task: qetza.replacetokens.replacetokens-task.replacetokens@3
             displayName: 'Replace tokens in terraform/*.tf'
             inputs:
@@ -103,6 +110,10 @@ stages:
       - job: Infra_Deploy
         displayName: Terraform Deploy
         steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
           - task: qetza.replacetokens.replacetokens-task.replacetokens@3
             displayName: 'Replace tokens in terraform/*.tf'
             inputs:

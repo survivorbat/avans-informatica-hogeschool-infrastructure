@@ -18,8 +18,8 @@ module "docent_project" {
   # Place all docent vms and the domain into this project
   resources = concat(
     module.docent_vms.*.urn,
-    # This object contains all our state
     [
+      # This object contains all our state
       "do:space:avans-terraform-state",
       module.domain.domain_urn
     ]
