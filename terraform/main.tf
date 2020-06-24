@@ -42,9 +42,12 @@ module "domain" {
   # Existing domain
   domain = var.domain
 
-  # Compile all wanted records
-  records = []
-  source  = "./modules/do_domain"
+  # Get names to all the droplets
+  do_vm_names = concat(
+      values(module.docent_vms).*.name,
+      values(module.student_vms).*.name
+  )
+  source  = "modules/do_vm_domains"
 }
 
 # Module that handles all the student vms

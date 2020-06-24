@@ -5,3 +5,7 @@ output "ipv4" {
 output "urn" {
   value = digitalocean_droplet.droplet.urn
 }
+
+output "name" {
+  value = digitalocean_droplet.droplet.name
+}
