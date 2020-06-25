@@ -21,7 +21,7 @@ module "docent_project" {
     [
       # This object contains all our state
       "do:space:avans-terraform-state",
-      module.domain.domain_urn
+      digitalocean_domain.domain.domain_urn
     ]
   )
   source = "./modules/do_project"
