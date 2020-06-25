@@ -9,7 +9,7 @@ resource "digitalocean_droplet" "droplet" {
   tags = concat(var.tags, [
     "timestamp:${timestamp()}",
     "image:${var.image}",
-    "size:${var.size}",
+    "size:${var.size}"
   ])
 
   region      = "ams3"

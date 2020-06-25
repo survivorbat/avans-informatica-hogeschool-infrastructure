@@ -47,7 +47,7 @@ module "domain" {
       values(module.docent_vms).*.name,
       values(module.student_vms).*.name
   )
-  depends_on = [module.student_vms]
+  depends_on = [module.student_vms.*.name]
   source  = "./modules/do_vm_domains"
 }
 
