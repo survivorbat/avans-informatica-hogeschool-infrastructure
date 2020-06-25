@@ -46,7 +46,7 @@ resource "digitalocean_domain" "domain" {
 resource "digitalocean_record" "student_subdomains" {
   for_each = var.student_vms
   domain   = digitalocean_domain.domain.name
-  name     = each.key
+  name     = "${each.key}.student"
   type     = "A"
   value    = module.student_vms[each.key].ipv4
 }
