@@ -34,21 +34,30 @@ module "student_project" {
   environment = "Production"
   # Place all student vms into this project
   resources = values(module.student_vms).*.urn
-  source = "./modules/do_project"
+  source    = "./modules/do_project"
 }
 
-# The main domain used to house all the project under
-module "domain" {
-  # Existing domain
-  domain = var.domain
+# Our domain
+resource "digitalocean_domain" "domain" {
+  name = var.domain
+}
 
-  # Get names to all the droplets
-  do_vm_names = concat(
-      values(module.docent_vms).*.name,
-      values(module.student_vms).*.name
-  )
-  depends_on = [module.student_vms]
-  source  = "./modules/do_vm_domains"
+# Records to connect the domain to student vms
+resource "digitalocean_record" "student_subdomains" {
+  for_each = var.student_vms
+  domain   = digitalocean_domain.domain.name
+  name     = each.key
+  type     = "A"
+  value    = module.student_vms[each.key].ipv4
+}
+
+# Records to connect the domain to docent vms
+resource "digitalocean_record" "docent_subdomains" {
+  for_each = var.docent_vms
+  domain   = digitalocean_domain.domain.name
+  name     = each.value.subdomain
+  type     = "A"
+  value    = module.docent_vms[each.key].ipv4
 }
 
 # Module that handles all the student vms
@@ -61,7 +70,7 @@ module "student_vms" {
   size     = each.value.size
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
-  tags     = [
+  tags = [
     "student:${each.key}"
   ]
 }
@@ -76,7 +85,7 @@ module "docent_vms" {
   size     = each.value.size
   backups  = each.value.backups
   ssh_keys = [module.master_key.id]
-  tags     = [
+  tags = [
     "docent:${replace(each.value.docent_name, " ", "")}"
   ]
 }

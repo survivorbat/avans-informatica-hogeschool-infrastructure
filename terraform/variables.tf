@@ -18,9 +18,9 @@ variable "master_key" {
 
 variable "student_vms" {
   type = map(object({
-    image          = string
-    size           = string
-    backups        = bool
+    image   = string
+    size    = string
+    backups = bool
   }))
   description = "List of student vms"
   default     = {}
