@@ -30,7 +30,7 @@
         groups: "students"
 
         # Add username and ssh_key to vars of the host
-        username: "s{{ item.key | regex_replace("([0-9]+)\-?.*", "\\1") }}"
+        username: "s{{ item.key | regex_replace('([0-9]+)\-?.*', '\\1') }}"
         user_ssh_key: "{{ item.value.user_ssh_key }}"
       loop: "{{ student_data.student_vms | dict2items }}"
 
