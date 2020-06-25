@@ -48,6 +48,7 @@ resource "digitalocean_record" "student_subdomains" {
   domain   = digitalocean_domain.domain.name
   name     = "${each.key}.student"
   type     = "A"
+  ttl      = 16
   value    = module.student_vms[each.key].ipv4
 }
 
@@ -57,6 +58,7 @@ resource "digitalocean_record" "docent_subdomains" {
   domain   = digitalocean_domain.domain.name
   name     = each.value.subdomain
   type     = "A"
+  ttl      = 16
   value    = module.docent_vms[each.key].ipv4
 }
 
