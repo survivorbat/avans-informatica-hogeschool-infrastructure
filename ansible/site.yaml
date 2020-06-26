@@ -39,7 +39,7 @@
     - name: "Add docent hosts"
       add_host:
         name: "{{ item.value.subdomain | replace('@', '') }}{{ '.' if item.value.subdomain != '@' else '' }}{{ domain | mandatory }}"
-        groups: "{{ item.value.ansible_group_name }}"
+        groups: "{{ item.value.ansible_group_name | default(omit) }}"
 
         # Add username and ssh_key to vars of the host
         username: "s{{ item.key | lower | replace(' ', '') }}"
