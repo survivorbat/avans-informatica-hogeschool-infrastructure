@@ -60,8 +60,8 @@ Daarnaast wordt ook de docent naam gebruikt in plaats van
       "image": "ubuntu-18-04-x64",
       "size": "s-1vcpu-1gb",
       "backups": false,
-      "user_ssh_key": "..."
-      "docent_name": "Pascal van Gastel"
+      "user_ssh_key": "...",
+      "docent_name": "Pascal van Gastel",
       "subdomain": "mijnserver"
     }
   ]
