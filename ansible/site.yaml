@@ -38,8 +38,8 @@
     # If the subdomain equals @ then remove the period and only register the domain
     - name: "Add docent hosts"
       add_host:
-        name: "{{ item.value.subdomain | replace('@', '') }}{{ '.' if item.subdomain != '@' else '' }}{{ domain | mandatory }}"
-        groups: "{{ item.ansible_group_name }}"
+        name: "{{ item.value.subdomain | replace('@', '') }}{{ '.' if item.value.subdomain != '@' else '' }}{{ domain | mandatory }}"
+        groups: "{{ item.value.ansible_group_name }}"
 
         # Add username and ssh_key to vars of the host
         username: "s{{ item.key | lower | replace(' ', '') }}"
