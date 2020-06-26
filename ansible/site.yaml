@@ -42,7 +42,7 @@
         groups: "{{ item.value.ansible_group_name | default(omit) }}"
 
         # Add username and ssh_key to vars of the host
-        username: "s{{ item.value.docent_name | lower | replace(' ', '') }}"
+        username: "{{ item.value.docent_name | lower | replace(' ', '') }}"
         user_ssh_key: "{{ item.value.user_ssh_key }}"
       loop: "{{ docent_data.docent_vms | dict2items }}"
 
