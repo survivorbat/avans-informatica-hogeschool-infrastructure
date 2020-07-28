@@ -9,10 +9,6 @@ De pipelines kun je hier vinden: [dev.azure.com/MaartenVanDerHeijdenProjecten/Pr
 
 ![Workflow diagram](docs/img/high-level.png)
 
-## Opmerkingen/Verbeterpunten
-
-Deze twee bugs worden z.s.m. verholpen.
-
 ## Avans Informatica Infrastructuur
 
 Deze servers zijn 'speciaal' geconfigureerd via Ansible.
