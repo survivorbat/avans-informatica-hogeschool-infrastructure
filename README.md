@@ -1,11 +1,9 @@
 # Avans Informatica Infrastructure
 
-Deze repository bevat de configuratie voor de huidige infrastructuur van het Avans Informatica Breda applicatielandschap. 
-Ideaal zou zijn om _alle_ draaiende systemen van docenten automatisch via deze repository te kunnen deployen.
-Alle documentatie omtrent Infrastructuur als Code is te vinden in de docs/ map.
-De bestanden in deze map worden automatisch gecompileerd naar een PDF in een pipeline.
+Deze repository bevat de configuratie voor de huidige infrastructuur van het Avans Informatica Breda applicatielandschap.
+Ideaal zou zijn om _alle_ draaiende systemen van docenten automatisch via deze repository te kunnen deployen. Alle documentatie omtrent Infrastructuur als Code is te vinden in de docs/ map. De bestanden in deze map worden automatisch gecompileerd naar een PDF in een pipeline.
 
-De pipelines kun je hier vinden: [dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/_build](https://dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/_build)
+De pipelines kun je hier vinden: [dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/\_build](https://dev.azure.com/MaartenVanDerHeijdenProjecten/Projects/_build)
 
 ![Workflow diagram](docs/img/high-level.png)
 
@@ -21,9 +19,9 @@ dat andere backends (bijvoorbeeld SonarQube of de CurriculumViewer) geen eigen h
 afhandeling nodig hebben.
 
 Gebaseerd op het request van een gebruiker stuurt de reverse proxy
-de gebruiker door naar een backend. Een student die 
+de gebruiker door naar een backend. Een student die
 sonarqube.avans-informatica.breda.nl bezoekt wordt bijvoorbeeld doorgestuurd naar de SonarQube backend
-zonder hier iets van te merken. 
+zonder hier iets van te merken.
 
 De configuratie van deze proxy bevindt zich in `ansible/roles/avans-entrypoint/templates/etc/avans-informatica-breda/nginx`.
 De webroot van deze entrypoint server is te vinden in de map `ansible/roles/avans-entrypoint/files/srv/app/www`.
